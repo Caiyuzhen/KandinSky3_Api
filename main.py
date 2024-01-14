@@ -17,6 +17,13 @@ API_URL = "https://api-key.fusionbrain.ai/"
 SERVER_IP = "127.0.0.1" # 服务器地址, 用于生成图片的 URL
 
 # 生图服务的路由 👉  http://127.0.0.1:8000/generateImage
+# 格式为:
+# {
+#	"api_key": "xxx",
+#	"secret_key": "xxx",
+#	"prompt_content": "xxx"
+# }
+ 
 @app.route('/generateImage', methods=['POST'])
 def index():
     # 鉴权
@@ -53,7 +60,7 @@ def index():
     
 @app.route('/images/<filename>', methods=['GET'])
 def get_image(filename):
-    return send_from_directory(OUTPUT_FOLDER, filename)
+    return send_from_directory(OUTPUT_FOLDER, filename) # 通过 http://127.0.0.1:8000/images/image_xxx.png 来访问图片
 
 
 
