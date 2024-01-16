@@ -12,9 +12,10 @@ from flask import Flask, request, jsonify, send_from_directory # 使用Flask的s
 app = Flask(__name__)
 
 # 生图的存放路径 => os.getcwd() 获取当前工作目录
-OUTPUT_FOLDER = os.path.join(os.getcwd(), 'output/')
+OUTPUT_FOLDER = os.path.join(os.getcwd(), 'outputs/')
 API_URL = "https://api-key.fusionbrain.ai/"
 SERVER_IP = "127.0.0.1" # 服务器地址, 用于生成图片的 URL
+PORT = 9090 # 服务器端口, 跟服务器启动的端口号一样, 用于生成图片的 URL
 
 # 生图服务的路由 👉  http://127.0.0.1:8000/generateImage
 # 格式为:
@@ -50,7 +51,8 @@ def index():
         os.mkdir(OUTPUT_FOLDER) 
         
     image_path = save_image_to_system(base64_string[0], OUTPUT_FOLDER) # 保存图片
-    image_url = f"http://{SERVER_IP}:8000/images/{os.path.basename(image_path)}" # 将保存路径转换为图片的 URL
+    image_url = f"http://{SERVER_IP}:{PORT}/images/{os.path.basename(image_path)}" # 将保存路径转换为图片的 URL
+    # image_url = f"http://{SERVER_IP}:9090/images/{os.path.basename(image_path)}" # 将保存路径转换为图片的 URL
     print(f"✅ 图片 URL: {image_url}")
     
     return jsonify({
@@ -66,4 +68,5 @@ def get_image(filename):
 
 # 初始化 __main__, 开启服务
 if __name__ == "__main__":
-	app.run(host="0.0.0.0", port=8000, debug=True)
+	app.run(host="0.0.0.0", port={PORT}, debug=True)
+#  app.run(host="0.0.0.0", port={9090}, debug=True)
