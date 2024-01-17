@@ -19,6 +19,8 @@ OUTPUT_FOLDER = os.path.join(os.getcwd(), 'outputs/')
 API_URL = "https://api-key.fusionbrain.ai/"
 # SERVER_IP = "127.0.0.1" # 服务器地址, 用于生成图片的 URL
 SERVER_IP = os.environ.get('SERVER_IP') # 【获取系统 ip 方法一(硬编码)】=> 从环境变量中获取 SERVER_IP
+API_KEY = os.environ.get('API_KEY') # 从环境变量中获取 API_KEY
+SECRET_KEY = os.environ.get('SECRET_KEY') # 从环境变量中获取 SECRET_KEY
 PORT = 9090 # 服务器端口, 跟服务器启动的端口号一样, 用于生成图片的 URL
 # print("拿到了 IP : ", SERVER_IP)
 
@@ -54,8 +56,8 @@ PORT = 9090 # 服务器端口, 跟服务器启动的端口号一样, 用于生�
 @app.route('/generateImage', methods=['POST'])
 def index():
     # 鉴权
-    API_KEY = request.json.get('api_key') # 从 POST 数据中获取 api_key 参数
-    SECRET_KEY = request.json.get('secret_key') # 从 POST 数据中获取 secret_key 参数
+    # API_KEY = request.json.get('api_key') # 从 POST 数据中获取 api_key 参数
+    # SECRET_KEY = request.json.get('secret_key') # 从 POST 数据中获取 secret_key 参数
     PROMPT_CONTENT = request.json.get('prompt_content') # 从 POST 数据中获取 prompt_content 参数
     print(f"✅ 拿到了参数: ", API_KEY, SECRET_KEY, PROMPT_CONTENT)
     
