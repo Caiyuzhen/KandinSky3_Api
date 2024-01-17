@@ -6,34 +6,41 @@ from datetime import datetime
 from utils.save_image import save_image_to_system
 from models.kandinsk import Text2ImageAPI
 from flask import Flask, request, jsonify, send_from_directory # 使用Flask的send_from_directory函数来提供静态文
+from dotenv import load_dotenv # 用来加载环境变量
 import socket # 用于获取当前服务器的 ip
+# from flask import url_for
 
 
 app = Flask(__name__)
 
 # 生图的存放路径 => os.getcwd() 获取当前工作目录
+load_dotenv()  # 加载 .env 文件中的环境变量
 OUTPUT_FOLDER = os.path.join(os.getcwd(), 'outputs/')
 API_URL = "https://api-key.fusionbrain.ai/"
 # SERVER_IP = "127.0.0.1" # 服务器地址, 用于生成图片的 URL
-# SERVER_IP = os.environ.get('SERVER_IP')
+SERVER_IP = os.environ.get('SERVER_IP') # 【获取系统 ip 方法一(硬编码)】=> 从环境变量中获取 SERVER_IP
 PORT = 9090 # 服务器端口, 跟服务器启动的端口号一样, 用于生成图片的 URL
-# 从环境变量中获取 SERVER_IP
+# print("拿到了 IP : ", SERVER_IP)
 
-# 获取服务器的IP地址
-def get_server_ip():
-    try:
-        # 这里使用一个连接到互联网的地址来获取主机名
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        return s.getsockname()[0]
-    except Exception as e:
-        print(f"Error getting server IP: {e}")
-        return None
-    finally:
-        s.close()
 
-# 服务器IP地址
-SERVER_IP = get_server_ip()
+
+# 【获取系统 ip 方法二】获取服务器的IP地址 ——————
+# def get_server_ip():
+#     try:
+#         # 这里使用一个连接到互联网的地址来获取主机名
+#         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#         s.connect(("8.8.8.8", 80))
+#         return s.getsockname()[0]
+#     except Exception as e:
+#         print(f"Error getting server IP: {e}")
+#         return None
+#     finally:
+#         s.close()
+
+# # 服务器IP地址 ——————
+# SERVER_IP = get_server_ip()
+# print("系统 ip:", SERVER_IP)
+
 
 
 # 生图服务的路由 👉  http://127.0.0.1:8000/generateImage
