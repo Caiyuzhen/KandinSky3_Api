@@ -67,7 +67,7 @@ def index():
     # 传入 Prompt, 获取生图模型 ID
     model_id = api_Instance.get_model()
     uuid = api_Instance.generate(PROMPT_CONTENT, model_id)
-    print(f"✅ 拿到了 model_id: ", model_id)
+    print(f"💪 拿到了 model_id, 已经开始生图: ", model_id)
     # uuid = api_Instance.generate("A cute robot cat", model_id)
     
     # 查询生图状态, 并返回图片的 base64 字符串
@@ -81,7 +81,7 @@ def index():
     image_path = save_image_to_system(base64_string[0], OUTPUT_FOLDER) # 保存图片
     image_url = f"http://{SERVER_IP}:{PORT}/images/{os.path.basename(image_path)}" # 将保存路径转换为图片的 URL
     # image_url = f"http://{SERVER_IP}:9090/images/{os.path.basename(image_path)}" # 将保存路径转换为图片的 URL
-    print(f"✅ 图片 URL: {image_url}")
+    print(f"🎉 生成好了图片, URL: {image_url}")
     
     return jsonify({
 		'image_path': image_url
