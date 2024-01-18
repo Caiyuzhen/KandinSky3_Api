@@ -84,7 +84,24 @@ def index():
     print(f"🎉 生成好了图片, URL: {image_url}")
     
     return jsonify({
-		'image_path': image_url
+		"code": 0,
+        "msg": "",
+        "data": {
+            "result": {
+                "image_path": image_url
+            }
+        },
+		"present": {
+			"type": "rich_text",
+			"body": "",
+		}
+  		# 'image_path': image_url
+		# "result": {
+		# 	"image_path": image_url
+		# }
+		# "result": {
+		# 	"image_path": image_url
+		# }
 	})
     
     
